@@ -1,16 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { capitalize } from '../utils';
 import { POSITION } from '../constants';
 
-
-const ToolTipArrow = (props) => {
-  const {
-    size,
-    color,
-    foregroundColor,
-    borderWidth,
-    position,
-  } = props.options;
+const ToolTipArrow = props => {
+  const { size, color, foregroundColor, borderWidth, position } = props.options;
 
   const positions = {
     right: { minorAxis: 'right', majorAxis: 'bottom' },
@@ -24,8 +18,9 @@ const ToolTipArrow = (props) => {
   const positionProp = capitalize(position);
   const marginProp = capitalize(majorAxis);
 
-  const borders = Object.keys(positions).filter(key => key !== position).map(key => capitalize(key));
-
+  const borders = Object.keys(positions)
+    .filter(key => key !== position)
+    .map(key => capitalize(key));
 
   const style = {
     position: 'absolute',
@@ -49,8 +44,8 @@ const ToolTipArrow = (props) => {
 };
 
 ToolTipArrow.propTypes = {
-  options: React.PropTypes.object,
-  foreground: React.PropTypes.bool,
+  options: PropTypes.object,
+  foreground: PropTypes.bool,
 };
 
 export default ToolTipArrow;

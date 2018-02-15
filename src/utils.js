@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-export const capitalize = (str) => {
+export const capitalize = str => {
   if (typeof str !== 'string') {
     return null;
   }
@@ -8,7 +8,9 @@ export const capitalize = (str) => {
 };
 
 const chr4 = () => {
-  return Math.random().toString(16).slice(-4);
+  return Math.random()
+    .toString(16)
+    .slice(-4);
 };
 
 export const uniqueId = () => {

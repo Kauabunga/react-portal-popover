@@ -1,12 +1,14 @@
+/* eslint-disable no-mixed-operators */
+
 import React from 'react';
+import PropTypes from 'prop-types';
 import ToolTipArrow from './ToolTipArrow';
 
 import { DEFAULT_ARROW_MARGIN, POSITION, SIZE, BOUNDARY, CLASSES } from '../constants';
 
-
 const exceedsRightBound = (left, elementRect, scrollLeft, boundary = BOUNDARY) => {
   const bodyRect = document.body.getBoundingClientRect();
-  return left + elementRect.width >= scrollLeft + bodyRect.width + (-boundary);
+  return left + elementRect.width >= scrollLeft + bodyRect.width + -boundary;
 };
 
 const exceedsLeftBound = (left, scrollLeft, boundary = BOUNDARY) => {
@@ -18,10 +20,9 @@ const exceedsBottomBound = (top, elementRect, boundary = BOUNDARY) => {
   return top + elementRect.height >= bottomBound - boundary;
 };
 
-const exceedsTopBound = (top,  boundary = BOUNDARY) => {
+const exceedsTopBound = (top, boundary = BOUNDARY) => {
   return top <= (document.body.scrollTop || 0) - boundary;
 };
-
 
 const clampHorizontal = (rect, elementRect, left, boundary = BOUNDARY) => {
   const bodyRect = document.body.getBoundingClientRect();
@@ -31,17 +32,14 @@ const clampHorizontal = (rect, elementRect, left, boundary = BOUNDARY) => {
 
   if (exceedsLeftBound(left, scrollLeft, boundary)) {
     nextLeft = scrollLeft + boundary;
-    arrowLeft = (rect.width / 2);
+    arrowLeft = rect.width / 2;
   } else if (exceedsRightBound(left, elementRect, scrollLeft, boundary)) {
-    nextLeft = (scrollLeft + bodyRect.width) - elementRect.width - boundary;
-    arrowLeft = elementRect.width - (rect.width / 2);
+    nextLeft = scrollLeft + bodyRect.width - elementRect.width - boundary;
+    arrowLeft = elementRect.width - rect.width / 2;
   }
-
-  // console.log(left);
 
   return { nextLeft, arrowLeft };
 };
-
 
 const clampVertical = (rect, elementRect, top, boundary = BOUNDARY) => {
   const bodyRect = {
@@ -54,26 +52,23 @@ const clampVertical = (rect, elementRect, top, boundary = BOUNDARY) => {
 
   if (exceedsTopBound(top, boundary)) {
     nextTop = boundary + bodyRect.top;
-    arrowBottom = (rect.height / 2);
+    arrowBottom = rect.height / 2;
   } else if (exceedsBottomBound(top, elementRect, boundary)) {
-    nextTop = bodyRect.bottom - elementRect.height - (rect.height / 2) - boundary;
-    arrowBottom = (rect.height / 2);
+    nextTop = bodyRect.bottom - elementRect.height - rect.height / 2 - boundary;
+    arrowBottom = rect.height / 2;
   }
-  // console.log(top);
 
   return { nextTop, arrowBottom };
 };
 
 const computeLeft = (rect, elementRect, scrollLeft) => {
-  const left = (rect.left || 0) + scrollLeft + (-elementRect.width / 2) + (rect.width / 2);
+  const left = (rect.left || 0) + scrollLeft + -elementRect.width / 2 + rect.width / 2;
   return left;
 };
 
-
 const computeTop = (rect, elementRect, scrollTop) => {
-  return rect.top + scrollTop + (rect.height / 2) + (-elementRect.height / 2);
+  return rect.top + scrollTop + rect.height / 2 + -elementRect.height / 2;
 };
-
 
 class PositionProvider extends React.Component {
   constructor(props) {
@@ -154,7 +149,7 @@ class PositionProvider extends React.Component {
 
     return {
       left: nextLeft,
-      top: rect.top + scrollTop + (-this.getArrow()) + (-elementRect.height),
+      top: rect.top + scrollTop + -this.getArrow() + -elementRect.height,
       arrowLeft,
     };
   }
@@ -165,7 +160,7 @@ class PositionProvider extends React.Component {
 
     return {
       left: nextLeft,
-      top: rect.bottom + scrollTop + (this.getArrow()),
+      top: rect.bottom + scrollTop + this.getArrow(),
       arrowLeft,
     };
   }
@@ -175,7 +170,7 @@ class PositionProvider extends React.Component {
     const { nextTop, arrowBottom } = clampVertical(rect, elementRect, top, this.props.boundary);
 
     return {
-      left: rect.left + scrollLeft + (-elementRect.width) + (-this.getArrow()),
+      left: rect.left + scrollLeft + -elementRect.width + -this.getArrow(),
       top: nextTop,
       arrowBottom,
     };
@@ -186,7 +181,7 @@ class PositionProvider extends React.Component {
     const { nextTop, arrowBottom } = clampVertical(rect, elementRect, top, this.props.boundary);
 
     return {
-      left: rect.right + scrollLeft + (this.getArrow()),
+      left: rect.right + scrollLeft + this.getArrow(),
       top: nextTop,
       arrowBottom,
     };
@@ -218,7 +213,7 @@ class PositionProvider extends React.Component {
 
     const rect = target ? target.getBoundingClientRect() : { left: 0, top: 0 };
     const scrollTop = document.body.scrollTop || 0;
-    const scrollLeft =  document.body.scrollLeft || 0;
+    const scrollLeft = document.body.scrollLeft || 0;
 
     const positionWithDefault = position || POSITION;
 
@@ -259,7 +254,7 @@ class PositionProvider extends React.Component {
     const nextStyle = this.state.nextStyle;
     let nextOptions = options;
 
-    const onClick = (e) => {
+    const onClick = e => {
       e.stopPropagation();
       e.nativeEvent.stopImmediatePropagation();
     };
@@ -273,22 +268,29 @@ class PositionProvider extends React.Component {
     return (
       <div
         id={id}
-        ref={(node) => { this.el = node; }}
+        ref={node => {
+          this.el = node;
+        }}
         onClick={onClick}
         style={style}
       >
         <ToolTipArrow options={nextOptions} />
-        { nextOptions.useForeground ?
-          <ToolTipArrow options={nextOptions} foreground={true} /> : null }
+        {nextOptions.useForeground ? <ToolTipArrow options={nextOptions} foreground={true} /> : null}
         <div
-          ref={(node) => { this.tooltip = node; }}
+          ref={node => {
+            this.tooltip = node;
+          }}
           tabIndex="-1"
           aria-labelledby={`label_for_${this.props.id}`}
           role="tooltip"
           className={this.props.classes}
           style={this.props.style}
         >
-          {label ? <h2 id={`label_for_${id}`} style={CLASSES.visuallyHidden}>{label}</h2> : null}
+          {label ? (
+            <h2 id={`label_for_${id}`} style={CLASSES.visuallyHidden}>
+              {label}
+            </h2>
+          ) : null}
           {children}
         </div>
       </div>
@@ -297,17 +299,17 @@ class PositionProvider extends React.Component {
 }
 
 PositionProvider.propTypes = {
-  children: React.PropTypes.node,
-  target: React.PropTypes.object,
-  options: React.PropTypes.object,
-  position: React.PropTypes.string,
-  label: React.PropTypes.string,
-  id: React.PropTypes.string,
-  arrowSize: React.PropTypes.number,
-  arrowOffset: React.PropTypes.number,
-  boundary: React.PropTypes.number,
-  classes: React.PropTypes.string,
-  style: React.PropTypes.object,
+  children: PropTypes.node,
+  target: PropTypes.object,
+  options: PropTypes.object,
+  position: PropTypes.string,
+  label: PropTypes.string,
+  id: PropTypes.string,
+  arrowSize: PropTypes.number,
+  arrowOffset: PropTypes.number,
+  boundary: PropTypes.number,
+  classes: PropTypes.string,
+  style: PropTypes.object,
 };
 
 export default PositionProvider;

@@ -1,5 +1,5 @@
 {
-  "name": "react-portal-popover",
+  "name": "@kauabunga/react-portal-popover",
   "version": "0.2.0",
   "description": "Popover for React using portals",
   "main": "lib/index.js",
@@ -11,7 +11,7 @@
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov",
     "test:watch": "mocha --watch test/.setup.js test/**/*.spec.js",
     "pub": "npm run lint && npm test && ./node_modules/.bin/babel -d lib src/ && npm publish",
-    "build": "npm run lint && npm test && webpack --config=webpack.config.prod.js --progress -p"
+    "build": "npm run lint && webpack --config=webpack.config.prod.js --progress -p && babel -d lib src/"
   },
   "repository": {
     "type": "git",
@@ -62,6 +62,7 @@
     "react-dom": "^15.3.0"
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react-portal": "^3.0.0"
   },
   "nyc": {
