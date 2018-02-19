@@ -36,9 +36,7 @@ class OverlayTrigger extends React.Component {
     this.isNodeMounted = true;
   }
 
-  componentDidUpdate() {
-
-  }
+  componentDidUpdate() {}
 
   componentWillUnmount() {
     this.isNodeMounted = false;
@@ -46,15 +44,18 @@ class OverlayTrigger extends React.Component {
   }
 
   toggleOverlay() {
-    this.setState({
-      open: !this.state.open,
-    }, () => {
-      if (this.state.open) {
-        this.addCloseHandler();
-      } else {
-        this.removeCloseHandler();
+    this.setState(
+      {
+        open: !this.state.open,
+      },
+      () => {
+        if (this.state.open) {
+          this.addCloseHandler();
+        } else {
+          this.removeCloseHandler();
+        }
       }
-    });
+    );
   }
 
   onClose() {
@@ -84,7 +85,7 @@ class OverlayTrigger extends React.Component {
   accessibleLabel(children) {
     if (this.props.showLabel && this.props.hideLabel) {
       const label = (
-        <span className="u-accessible">
+        <span key="overlay-trigger-accessible-label" className="u-accessible">
           {this.state.open ? this.props.hideLabel : this.props.showLabel}
         </span>
       );
@@ -108,15 +109,19 @@ class OverlayTrigger extends React.Component {
       'aria-owns': this.state.id,
       'aria-expanded': this.state.open,
       'aria-haspopup': true,
+      key: triggerId,
       id: triggerId,
       children: this.accessibleLabel(children.props.children),
-      ref: (ref) => { this.trigger = ref; },
+      ref: ref => {
+        this.trigger = ref;
+      },
     });
 
     const overlay = React.cloneElement(this.props.overlay, {
       trigger: this.trigger || null,
       isOpened: this.state.open,
       onClose: this.onClose,
+      key: this.state.id,
       id: this.state.id,
       label: this.props.label || '',
     });

@@ -11,7 +11,7 @@
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov",
     "test:watch": "mocha --watch test/.setup.js test/**/*.spec.js",
     "pub": "npm run lint && npm test && ./node_modules/.bin/babel -d lib src/ && npm publish",
-    "build": "npm run lint && webpack --config=webpack.config.prod.js --progress -p && babel -d lib src/"
+    "build": "npm run lint && babel -d lib src/"
   },
   "repository": {
     "type": "git",
@@ -58,8 +58,8 @@
     "webpack-hot-middleware": "^2.12.2"
   },
   "peerDependencies": {
-    "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "dependencies": {
     "prop-types": "^15.6.0",
