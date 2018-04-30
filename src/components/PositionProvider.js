@@ -123,7 +123,7 @@ class PositionProvider extends React.Component {
   handleFocusChange(e) {
     const dialog = this.tooltip;
 
-    if (!dialog.contains(e.target)) {
+    if (dialog && !dialog.contains(e.target)) {
       e.stopPropagation();
       dialog.focus();
     }
@@ -259,7 +259,7 @@ class PositionProvider extends React.Component {
       e.nativeEvent.stopImmediatePropagation();
     };
 
-    const style = { position: 'absolute' };
+    const style = { position: 'absolute', zIndex: 1000000000 };
 
     if (nextStyle.nextPosition) {
       nextOptions = Object.assign({}, options, { position: nextStyle.nextPosition });
