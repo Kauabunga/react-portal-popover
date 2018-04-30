@@ -11,6 +11,7 @@
     "coverage": "NODE_ENV=test nyc report --reporter=text-lcov",
     "test:watch": "mocha --watch test/.setup.js test/**/*.spec.js",
     "pub": "npm run lint && npm test && ./node_modules/.bin/babel -d lib src/ && npm publish",
+    "pub:force": "npm run lint && ./node_modules/.bin/babel -d lib src/ && npm publish",
     "build": "npm run lint && babel -d lib src/"
   },
   "repository": {
