@@ -135,7 +135,10 @@ class PositionProvider extends React.Component {
 
   componentWillUnmount() {
     document.removeEventListener('focus', this.handleFocusChange, true);
-    this.props.target.focus();
+    const { target } = this.props;
+    if (target) {
+      target.focus();
+    }
   }
 
   getArrow() {
