@@ -7,7 +7,7 @@ class OverlayTrigger extends React.Component {
     super(props);
     this.state = {
       open: false,
-      id: uniqueId(),
+      id: props.id || uniqueId(),
     };
     this.toggleOverlay = this.toggleOverlay.bind(this);
     this.onClose = this.onClose.bind(this);
@@ -136,6 +136,7 @@ class OverlayTrigger extends React.Component {
 }
 
 OverlayTrigger.propTypes = {
+  id: PropTypes.string,
   closeOnScroll: PropTypes.bool,
   children: PropTypes.element.isRequired,
   overlay: PropTypes.object.isRequired,
