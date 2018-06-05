@@ -1,6 +1,6 @@
 {
   "name": "@kauabunga/react-portal-popover",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Popover for React using portals",
   "main": "lib/index.js",
   "scripts": {
