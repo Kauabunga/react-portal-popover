@@ -125,7 +125,9 @@ class PositionProvider extends React.Component {
 
     if (dialog && !dialog.contains(e.target)) {
       e.stopPropagation();
-      dialog.focus();
+
+      // This is causing recursive booms
+      // dialog.focus();
     }
   }
 

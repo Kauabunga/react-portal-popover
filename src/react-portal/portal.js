@@ -115,7 +115,7 @@ export default class Portal extends React.Component {
     }
 
     const root = findDOMNode(this.portal);
-    if (!root ||  root.contains(e.target) || (e.button && e.button !== 0)) {
+    if (!root || root.contains(e.target) || (e.button && e.button !== 0)) {
       return;
     }
 
